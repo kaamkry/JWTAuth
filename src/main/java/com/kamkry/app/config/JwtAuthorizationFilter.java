@@ -53,12 +53,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, ""));
-            String username = decodedJWT.getSubject();
+            String id = decodedJWT.getSubject();
 
 
             List<SimpleGrantedAuthority> authorityList = decodedJWT.getClaim("authorities").asList(SimpleGrantedAuthority.class);
 
-            return new UsernamePasswordAuthenticationToken(username, null, authorityList);
+            return new UsernamePasswordAuthenticationToken(id, null, authorityList);
         }
         return null;
     }

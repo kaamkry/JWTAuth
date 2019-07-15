@@ -4,18 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Set;
 
 @Entity
-@Table(name = "user_role")
+@Table(name = "role")
 public class UserRole implements GrantedAuthority {
+
     private Integer id;
-    @JsonIgnore
-    private AppUser user;
     private String role;
+
+    @JsonIgnore
+    private Set<AppUser> users = new HashSet<>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_role_id")
+    @Column(name = "id")
     public Integer getId() {
         return id;
     }
@@ -24,17 +29,19 @@ public class UserRole implements GrantedAuthority {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    public AppUser getUser() {
-        return user;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    public Set<AppUser> getUsers() {
+        return users;
     }
 
-    public void setUser(AppUser user) {
-        this.user = user;
+    public void setUsers(Set<AppUser> user) {
+        this.users = user;
     }
 
-    @Column
+    @Column(name = "role_name")
     public String getRole() {
         return role;
     }
@@ -46,6 +53,6 @@ public class UserRole implements GrantedAuthority {
     @Transient
     @Override
     public String getAuthority() {
-        return role ;
+        return role;
     }
 }

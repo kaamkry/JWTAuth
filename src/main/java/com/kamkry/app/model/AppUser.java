@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Set;
 
 @Entity
@@ -21,7 +23,7 @@ public class AppUser implements UserDetails {
     private String password;
     private boolean enabled;
     @JsonIgnore
-    private Set<UserRole> userRoles;
+    private Set<UserRole> userRoles = new HashSet<>(0);
 
 
     @Transient
@@ -88,7 +90,7 @@ public class AppUser implements UserDetails {
         this.enabled = enabled;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "users", cascade = CascadeType.ALL)
     public Set<UserRole> getUserRoles() {
         return userRoles;
     }

@@ -51,8 +51,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Integer id){
+    public void deleteUser(@PathVariable Integer id) {
         userService.delete(id);
+    }
+
+    @GetMapping("/current")
+    public @ResponseBody String currentUser() {
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     }
 
 }
