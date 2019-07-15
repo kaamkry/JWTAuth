@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             AppUser user = new ObjectMapper().readValue(request.getInputStream(), AppUser.class);
-            System.out.println("user " + user);
+            System.out.println(user);
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
@@ -60,10 +60,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         AppUser user = (AppUser) authResult.getPrincipal();
 
-        System.out.println();
-
         String token = JWT.create()
-                .withSubject(user.getUsername())
+                .withSubject(user.getId().toString())
                 .withArrayClaim("authorities", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new))
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET));
