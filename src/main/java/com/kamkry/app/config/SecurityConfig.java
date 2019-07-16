@@ -1,6 +1,5 @@
 package com.kamkry.app.config;
 
-import com.kamkry.app.model.AppUser;
 import com.kamkry.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,15 +10,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.ArrayList;
 
 import static com.kamkry.app.config.SecurityConstants.LOGIN_URL;
 import static com.kamkry.app.config.SecurityConstants.SIGN_UP_URL;
@@ -32,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
@@ -42,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .antMatchers("/api/users/**").hasAuthority("ROLE_ADMIN")
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(getAuthenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -64,4 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
+
+
+    public JwtAuthenticationFilter getAuthenticationFilter() throws Exception{
+        final JwtAuthenticationFilter authenticationFilter =
+                new JwtAuthenticationFilter(authenticationManager());
+        authenticationFilter.setFilterProcessesUrl("/api/auth/login");
+        return authenticationFilter;
+    }
+
 }
