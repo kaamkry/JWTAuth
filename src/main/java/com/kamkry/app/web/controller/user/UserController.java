@@ -1,7 +1,7 @@
-package com.kamkry.app.controller;
+package com.kamkry.app.web.controller.user;
 
-import com.kamkry.app.model.AppUser;
-import com.kamkry.app.service.UserService;
+import com.kamkry.app.domain.user.AppUser;
+import com.kamkry.app.domain.user.UserService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -27,7 +28,7 @@ public class UserController {
         return userService.get(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @GetMapping("")
     public List<AppUser> getAllUsers() {
         return userService.getAll();

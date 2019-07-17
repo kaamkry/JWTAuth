@@ -1,4 +1,4 @@
-package com.kamkry.app.controller;
+package com.kamkry.app.web.controller.user;
 
 
 import org.springframework.http.HttpStatus;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class UserExceptionHandler{
 
+    // TODO investigate
     @ExceptionHandler
     public @ResponseBody
     UserErrorResponse usernameNotFound(UserNotFoundException exception) {

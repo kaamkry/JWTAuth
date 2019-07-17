@@ -1,7 +1,5 @@
-package com.kamkry.app.service;
+package com.kamkry.app.domain.user;
 
-import com.kamkry.app.model.AppUser;
-import com.kamkry.app.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,9 +10,9 @@ import java.util.List;
 
 @Service(value = "userService")
 public class UserService implements UserDetailsService {
+
     @Autowired
     UserDao userDao;
-
 
     public AppUser get(String username) {
         return userDao.get(username);

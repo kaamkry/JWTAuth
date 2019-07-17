@@ -1,11 +1,11 @@
-package com.kamkry.app.config;
+package com.kamkry.app.infrastructure.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.kamkry.app.controller.UserErrorResponse;
-import com.kamkry.app.model.AppUser;
+import com.kamkry.app.domain.user.AppUser;
+import com.kamkry.app.web.controller.user.UserErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-import static com.kamkry.app.config.SecurityConstants.*;
+import static com.kamkry.app.infrastructure.config.SecurityConstants.*;
 
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -37,52 +37,62 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        AppUser user = null;
-        try {
-            user = new ObjectMapper().readValue(request.getInputStream(), AppUser.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        AppUser user = mapUserFromRequest(request);
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     user.getUsername(),
                     user.getPassword(),
                     user.getUserRoles()
             );
-
             return authenticationManager.authenticate(token);
         } catch (InternalAuthenticationServiceException exception) {
-            try {
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                String json = new Gson().toJson(
-                        new UserErrorResponse(
-                                HttpStatus.NOT_FOUND.value(),
-                                "There's not user: "+user.getUsername(),
-                                System.currentTimeMillis()
-                        )
-                );
-                response.getWriter().println(json);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
+            createErrorResponse(response, user);
         }
-
         return null;
+    }
+
+    private AppUser mapUserFromRequest(HttpServletRequest request) {
+        try {
+            return new ObjectMapper().readValue(request.getInputStream(), AppUser.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createErrorResponse(HttpServletResponse response, AppUser user) {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String json = new Gson().toJson(
+                new UserErrorResponse(
+                        HttpStatus.NOT_FOUND.value(),
+                        user.getUsername() + " doesn't exist",
+                        System.currentTimeMillis()
+                )
+        );
+        returnErrorResponse(response, json);
+    }
+
+    private void returnErrorResponse(HttpServletResponse response, String json) {
+        try {
+            response.getWriter().println(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         AppUser user = (AppUser) authResult.getPrincipal();
+        String token = createToken(user);
+        response.getWriter().write("{\"" + TOKEN_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
+    }
 
-        String token = JWT.create()
+    private String createToken(AppUser user) {
+        return JWT.create()
                 .withSubject(user.getId().toString())
                 .withArrayClaim("authorities", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new))
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET));
-
-        response.getWriter().write("{\"" + TOKEN_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
     }
 }

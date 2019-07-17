@@ -1,11 +1,10 @@
-package com.kamkry.app.model;
+package com.kamkry.app.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Set;
 
 @Entity

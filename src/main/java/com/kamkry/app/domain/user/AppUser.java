@@ -1,4 +1,4 @@
-package com.kamkry.app.model;
+package com.kamkry.app.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;

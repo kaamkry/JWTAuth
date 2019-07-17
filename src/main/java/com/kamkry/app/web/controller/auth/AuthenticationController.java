@@ -1,8 +1,9 @@
-package com.kamkry.app.controller;
+package com.kamkry.app.web.controller.auth;
 
 
-import com.kamkry.app.model.AppUser;
-import com.kamkry.app.service.UserService;
+import com.kamkry.app.domain.user.AppUser;
+import com.kamkry.app.domain.user.UserService;
+import com.kamkry.app.web.controller.user.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,6 @@ public class AuthenticationController {
     public void signUp(@RequestBody AppUser user){
         if(userService.get(user.getUsername())!=null)
             throw new UserAlreadyExistsException(user.getUsername());
-
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
     }

@@ -1,4 +1,4 @@
-package com.kamkry.app.controller;
+package com.kamkry.app.web.controller.user;
 
 public class UserNotFoundException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.kamkry.app.controller;
+package com.kamkry.app.web.controller.user;
 
 public class UserErrorResponse {
     private int status;
