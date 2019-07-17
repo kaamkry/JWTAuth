@@ -15,7 +15,7 @@ public class UserRole implements GrantedAuthority {
     private String role;
 
     @JsonIgnore
-    private Set<AppUser> users = new HashSet<>(0);
+    private Set<User> users = new HashSet<>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,11 @@ public class UserRole implements GrantedAuthority {
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    public Set<AppUser> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<AppUser> user) {
+    public void setUsers(Set<User> user) {
         this.users = user;
     }
 

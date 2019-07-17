@@ -1,4 +1,4 @@
-package com.kamkry.app.web.controller.user;
+package com.kamkry.app.web.controller.user.exception;
 
 
 import org.springframework.http.HttpStatus;
@@ -12,8 +12,8 @@ public class UserExceptionHandler{
     // TODO investigate
     @ExceptionHandler
     public @ResponseBody
-    UserErrorResponse usernameNotFound(UserNotFoundException exception) {
-        return new UserErrorResponse(
+    UserExceptionResponse usernameNotFound(UserNotFoundException exception) {
+        return new UserExceptionResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exception.getMessage(),
                 System.currentTimeMillis()
@@ -22,8 +22,8 @@ public class UserExceptionHandler{
 
     @ExceptionHandler
     public @ResponseBody
-    UserErrorResponse usernameAlreadyExists(UserAlreadyExistsException exception) {
-        return new UserErrorResponse(
+    UserExceptionResponse usernameAlreadyExists(UserAlreadyExistsException exception) {
+        return new UserExceptionResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exception.getMessage(),
                 System.currentTimeMillis()
@@ -32,8 +32,8 @@ public class UserExceptionHandler{
 
     @ExceptionHandler
     public @ResponseBody
-    UserErrorResponse handleException(Exception exception) {
-        return new UserErrorResponse(
+    UserExceptionResponse handleException(Exception exception) {
+        return new UserExceptionResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 exception.getMessage(),
                 System.currentTimeMillis()

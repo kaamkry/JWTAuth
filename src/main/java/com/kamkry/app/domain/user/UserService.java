@@ -14,28 +14,28 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    public AppUser get(String username) {
+    public User get(String username) {
         return userDao.get(username);
     }
 
-    public AppUser get(Integer id) {
+    public User get(Integer id) {
         return userDao.get(id);
     }
 
-    public List<AppUser> getAll() {
+    public List<User> getAll() {
         return userDao.getAll();
     }
 
-    public void save(AppUser user) {
+    public void save(User user) {
         userDao.save(user);
     }
 
-    public void update(AppUser user) {
+    public void update(User user) {
         userDao.update(user);
     }
 
-    public void delete(Integer id) {
-        userDao.delete(id);
+    public void delete(User user) {
+        userDao.delete(user);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @Table(name = "user")
-public class AppUser implements UserDetails {
+public class User implements UserDetails {
 
     private Integer id;
     private String username;
@@ -26,30 +26,6 @@ public class AppUser implements UserDetails {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    @Transient
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userRoles;
-    }
-
-    @Transient
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Transient
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Transient
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,10 +75,33 @@ public class AppUser implements UserDetails {
         this.userRoles = userRoles;
     }
 
+    @Transient
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return userRoles;
+    }
+
+    @Transient
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
     @Override
     public String toString() {
-        return ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "username='" + username + '\'' +
+                ", password='" + password + "'.";
     }
 }

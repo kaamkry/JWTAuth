@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.kamkry.app.domain.user.AppUser;
-import com.kamkry.app.web.controller.user.UserErrorResponse;
+import com.kamkry.app.domain.user.User;
+import com.kamkry.app.web.controller.user.exception.UserExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        AppUser user = mapUserFromRequest(request);
+        User user = mapUserFromRequest(request);
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                     user.getUsername(),
@@ -51,19 +51,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return null;
     }
 
-    private AppUser mapUserFromRequest(HttpServletRequest request) {
+    private User mapUserFromRequest(HttpServletRequest request) {
         try {
-            return new ObjectMapper().readValue(request.getInputStream(), AppUser.class);
+            return new ObjectMapper().readValue(request.getInputStream(), User.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void createErrorResponse(HttpServletResponse response, AppUser user) {
+    private void createErrorResponse(HttpServletResponse response, User user) {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String json = new Gson().toJson(
-                new UserErrorResponse(
+                new UserExceptionResponse(
                         HttpStatus.NOT_FOUND.value(),
                         user.getUsername() + " doesn't exist",
                         System.currentTimeMillis()
@@ -83,12 +83,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        AppUser user = (AppUser) authResult.getPrincipal();
+        User user = (User) authResult.getPrincipal();
         String token = createToken(user);
         response.getWriter().write("{\"" + TOKEN_HEADER + "\":\"" + TOKEN_PREFIX + token + "\"}");
     }
 
-    private String createToken(AppUser user) {
+    private String createToken(User user) {
         return JWT.create()
                 .withSubject(user.getId().toString())
                 .withArrayClaim("authorities", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new))

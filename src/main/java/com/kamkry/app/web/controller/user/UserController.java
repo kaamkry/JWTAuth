@@ -1,7 +1,8 @@
 package com.kamkry.app.web.controller.user;
 
-import com.kamkry.app.domain.user.AppUser;
+import com.kamkry.app.domain.user.User;
 import com.kamkry.app.domain.user.UserService;
+import com.kamkry.app.web.controller.user.exception.UserNotFoundException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,23 +25,23 @@ public class UserController {
     SessionFactory sessionFactory;
 
     @GetMapping("/{id}")
-    public AppUser getUser(@PathVariable(value = "id") Integer id) {
+    public User getUser(@PathVariable(value = "id") Integer id) {
+        if (userService.get(id) == null) throw new UserNotFoundException(id);
         return userService.get(id);
     }
 
-
     @GetMapping("")
-    public List<AppUser> getAllUsers() {
+    public List<User> getAllUsers() {
         return userService.getAll();
     }
 
     @PostMapping("")
-    public void saveUser(@RequestBody AppUser user) {
+    public void saveUser(@RequestBody User user) {
         userService.save(user);
     }
 
     @PutMapping("")
-    public void updateUser(@RequestBody AppUser user) {
+    public void updateUser(@RequestBody User user) {
         userService.update(user);
     }
 

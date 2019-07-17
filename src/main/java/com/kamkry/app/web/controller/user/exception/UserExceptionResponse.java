@@ -1,14 +1,14 @@
-package com.kamkry.app.web.controller.user;
+package com.kamkry.app.web.controller.user.exception;
 
-public class UserErrorResponse {
+public class UserExceptionResponse {
     private int status;
     private String message;
     private long timestamp;
 
-    public UserErrorResponse() {
+    public UserExceptionResponse() {
     }
 
-    public UserErrorResponse(int status, String message, long timestamp) {
+    public UserExceptionResponse(int status, String message, long timestamp) {
         this.status = status;
         this.message = message;
         this.timestamp = timestamp;

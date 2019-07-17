@@ -1,4 +1,4 @@
-package com.kamkry.app.web.controller.user;
+package com.kamkry.app.web.controller.user.exception;
 
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(String username) {
