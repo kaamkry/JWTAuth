@@ -1,18 +1,25 @@
 package com.kamkry.app.domain.operation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.kamkry.app.domain.user.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table
-public class Operation {
+@Table(name = "operation")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Operation implements Serializable {
 
     private Integer id;
     private User user;
     private Category category;
     private OperationType operationType;
+    private Integer amount;
     private String description;
     private Date createDate;
     private Date modifyDate;
@@ -20,7 +27,7 @@ public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     public Integer getId() {
         return id;
     }
@@ -29,6 +36,8 @@ public class Operation {
         this.id = id;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public User getUser() {
         return user;
@@ -38,6 +47,9 @@ public class Operation {
         this.user = user;
     }
 
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Category getCategory() {
         return category;
@@ -47,13 +59,27 @@ public class Operation {
         this.category = category;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operation_type_id", referencedColumnName = "id")
     public OperationType getOperationType() {
         return operationType;
     }
 
+
     public void setOperationType(OperationType operationType) {
         this.operationType = operationType;
+    }
+
+    @Column
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     @Column

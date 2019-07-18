@@ -3,6 +3,8 @@ package com.kamkry.app.domain.operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OperationService {
 
@@ -11,6 +13,10 @@ public class OperationService {
 
     public Operation get(Integer id) {
         return operationDao.get(id);
+    }
+
+    public List<Operation> getByUserId(Integer id) {
+        return operationDao.getByUserId(id);
     }
 
     public void save(Operation operation) {

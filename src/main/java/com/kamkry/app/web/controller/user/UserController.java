@@ -46,8 +46,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Integer id) {
-        userService.delete(id);
+    public void disableUser(@PathVariable Integer id) {
+        userService.disable(userService.get(id));
     }
 
     @GetMapping("/current")
@@ -55,4 +55,6 @@ public class UserController {
     String currentUser() {
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     }
+
+
 }

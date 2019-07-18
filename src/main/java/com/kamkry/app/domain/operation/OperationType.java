@@ -1,16 +1,18 @@
 package com.kamkry.app.domain.operation;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "operation_type")
-public class OperationType {
+public class OperationType implements Serializable {
+
     private Integer id;
     private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     public Integer getId() {
         return id;
     }
@@ -19,7 +21,7 @@ public class OperationType {
         this.id = id;
     }
 
-    @Column
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -27,4 +29,6 @@ public class OperationType {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

@@ -34,8 +34,8 @@ public class UserService implements UserDetailsService {
         userDao.update(user);
     }
 
-    public void delete(User user) {
-        userDao.delete(user);
+    public void disable(User user) {
+        userDao.disable(user);
     }
 
     @Override

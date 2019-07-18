@@ -44,7 +44,7 @@ public class AppConfig implements TransactionManagementConfigurer, WebMvcConfigu
 
     private Properties properties() {
         Properties properties = new Properties();
-        //properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.show_sql", "true");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         properties.put("hibernate.connection.datasource", dataSource());
         return properties;
@@ -54,4 +54,6 @@ public class AppConfig implements TransactionManagementConfigurer, WebMvcConfigu
     public PlatformTransactionManager annotationDrivenTransactionManager() {
         return new HibernateTransactionManager(SessionFactory());
     }
+
+
 }

@@ -15,6 +15,7 @@ import java.util.Set;
 @Entity
 @DynamicUpdate
 @Table(name = "user")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements UserDetails {
 
     private Integer id;

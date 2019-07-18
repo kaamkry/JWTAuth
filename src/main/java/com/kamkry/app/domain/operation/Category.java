@@ -5,7 +5,7 @@ import com.kamkry.app.domain.user.User;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "category")
 public class Category {
     private Integer id;
     private String name;
@@ -43,6 +43,7 @@ public class Category {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "super_category_id")
     public Category getSuperCategory() {
         return superCategory;
     }
@@ -51,7 +52,8 @@ public class Category {
         this.superCategory = superCategory;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "operation_type_id")
     public OperationType getOperationType() {
         return operationType;
     }

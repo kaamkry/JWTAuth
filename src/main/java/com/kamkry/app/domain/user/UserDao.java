@@ -66,9 +66,9 @@ public class UserDao {
         session.save(existingUser);
     }
 
-    public void delete(User user) {
+    public void disable(User user) {
         user.setEnabled(false);
         sessionFactory.getCurrentSession().update(user);
-        //sessionFactory.getCurrentSession().delete(get(id));
+        //sessionFactory.getCurrentSession().disable(get(id));
     }
 }
