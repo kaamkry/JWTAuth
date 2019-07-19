@@ -40,7 +40,8 @@ public class UserDao {
 
     public List<User> getAll() {
         List<User> result = (List<User>) sessionFactory.getCurrentSession()
-                .createQuery("from User").getResultList();
+                .createQuery("from User")
+                .getResultList();
         for (User user : result) {
             initializeAuthorities(user.getAuthorities());
         }

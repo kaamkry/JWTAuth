@@ -1,9 +1,7 @@
 package com.kamkry.app.domain.operation;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import com.kamkry.app.domain.category.Category;
 import com.kamkry.app.domain.user.User;
 
 import javax.persistence.*;
@@ -36,8 +34,7 @@ public class Operation implements Serializable {
         this.id = id;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public User getUser() {
         return user;
@@ -46,7 +43,6 @@ public class Operation implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -59,7 +55,6 @@ public class Operation implements Serializable {
         this.category = category;
     }
 
-
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -67,7 +62,6 @@ public class Operation implements Serializable {
     public OperationType getOperationType() {
         return operationType;
     }
-
 
     public void setOperationType(OperationType operationType) {
         this.operationType = operationType;

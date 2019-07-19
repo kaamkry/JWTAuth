@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class UserExceptionHandler{
 
-    // TODO investigate
     @ExceptionHandler
     public @ResponseBody
     UserExceptionResponse usernameNotFound(UserNotFoundException exception) {
@@ -32,6 +31,16 @@ public class UserExceptionHandler{
 
     @ExceptionHandler
     public @ResponseBody
+    UserExceptionResponse userNotAuthorized(UserNotAuthorizedException exception) {
+        return new UserExceptionResponse(
+                HttpStatus.FORBIDDEN.value(),
+                exception.getMessage(),
+                System.currentTimeMillis()
+        );
+    }
+
+    @ExceptionHandler
+    public @ResponseBody
     UserExceptionResponse handleException(Exception exception) {
         return new UserExceptionResponse(
                 HttpStatus.BAD_REQUEST.value(),
@@ -39,4 +48,6 @@ public class UserExceptionHandler{
                 System.currentTimeMillis()
         );
     }
+
+
 }

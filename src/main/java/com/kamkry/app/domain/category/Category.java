@@ -1,17 +1,24 @@
-package com.kamkry.app.domain.operation;
+package com.kamkry.app.domain.category;
 
+import com.kamkry.app.domain.operation.OperationType;
 import com.kamkry.app.domain.user.User;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category implements Serializable {
+
     private Integer id;
     private String name;
     private User user;
     private Category superCategory;
     private OperationType operationType;
+    private Date createDate;
+    private Date modifyDate;
+    private Date deleteDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,5 +67,32 @@ public class Category {
 
     public void setOperationType(OperationType operationType) {
         this.operationType = operationType;
+    }
+
+    @Column(name = "create_date")
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    @Column(name = "modify_date")
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    @Column(name = "delete_date")
+    public Date getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(Date deleteDate) {
+        this.deleteDate = deleteDate;
     }
 }

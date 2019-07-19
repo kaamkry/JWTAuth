@@ -1,6 +1,5 @@
 package com.kamkry.app.domain.operation;
 
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,20 +15,17 @@ public class OperationDao {
     private SessionFactory sessionFactory;
 
     public Operation get(Integer id) {
-        Operation operation = (Operation) sessionFactory.getCurrentSession()
-                .createQuery("from Operation where operationId=:id")
+        return (Operation) sessionFactory.getCurrentSession()
+                .createQuery("from Operation where id=:id")
                 .setParameter("id", id)
                 .uniqueResult();
-        if (operation != null) Hibernate.initialize(operation.getOperationType());
-        return operation;
     }
 
     public List<Operation> getByUserId(Integer id) {
-        List<Operation> operations = (List<Operation>) sessionFactory.getCurrentSession()
+        return (List<Operation>) sessionFactory.getCurrentSession()
                 .createQuery("from Operation where user.id=:id")
                 .setParameter("id", id)
                 .getResultList();
-        return operations;
     }
 
     public void save(Operation operation) {
@@ -42,9 +38,15 @@ public class OperationDao {
         sessionFactory.getCurrentSession().update(operation);
     }
 
-    public void delete(Operation operation) {
+    public void disable(Operation operation) {
         operation.setDeleteDate(new Date(System.currentTimeMillis()));
         sessionFactory.getCurrentSession().update(operation);
-        //sessionFactory.getCurrentSession().disable(operation);
+    }
+
+    public OperationType getOperationType(Integer id) {
+        return (OperationType) sessionFactory.getCurrentSession()
+                .createQuery("from OperationType where id=:id")
+                .setParameter("id", id)
+                .uniqueResult();
     }
 }

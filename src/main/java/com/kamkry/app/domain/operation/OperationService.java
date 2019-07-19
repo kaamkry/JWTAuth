@@ -28,6 +28,10 @@ public class OperationService {
     }
 
     public void delete(Operation operation) {
-        operationDao.delete(operation);
+        operationDao.disable(operation);
+    }
+
+    public OperationType getOperationType(Integer id) {
+        return operationDao.getOperationType(id);
     }
 }

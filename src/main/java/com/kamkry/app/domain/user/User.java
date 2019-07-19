@@ -20,8 +20,12 @@ public class User implements UserDetails {
 
     private Integer id;
     private String username;
+    private String email;
     private String password;
     private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
     @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>(0);
 
@@ -49,6 +53,15 @@ public class User implements UserDetails {
     }
 
     @Column
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Column
     public String getPassword() {
         return password;
     }
@@ -67,7 +80,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "users", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
     public Set<UserRole> getUserRoles() {
         return userRoles;
     }
@@ -82,25 +95,36 @@ public class User implements UserDetails {
         return userRoles;
     }
 
-    @Transient
+    @Column(name = "account_non_expired")
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
-    @Transient
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Column(name = "account_non_locked")
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
-    @Transient
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Column(name = "credentials_non_expired")
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
-    @Override
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
     public String toString() {
         return "username='" + username + '\'' +
                 ", password='" + password + "'.";
