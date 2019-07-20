@@ -2,11 +2,13 @@ package com.kamkry.app.web.controller.user;
 
 import com.kamkry.app.domain.user.User;
 import com.kamkry.app.domain.user.UserService;
+import com.kamkry.app.web.controller.user.exception.UserAlreadyExistsException;
 import com.kamkry.app.web.controller.user.exception.UserNotFoundException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +26,9 @@ public class UserController {
     @Autowired
     SessionFactory sessionFactory;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @GetMapping("/{id}")
     public User getUser(@PathVariable(value = "id") Integer id) {
         if (userService.get(id) == null) throw new UserNotFoundException(id);
@@ -38,6 +43,10 @@ public class UserController {
 
     @PostMapping("")
     public void saveUser(@RequestBody User user) {
+        if (userService.get(user.getUsername()) != null) {
+            throw new UserAlreadyExistsException(user.getUsername());
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
     }
 

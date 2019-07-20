@@ -72,4 +72,7 @@ public class UserDao {
         sessionFactory.getCurrentSession().update(user);
         //sessionFactory.getCurrentSession().disable(get(id));
     }
+    public void delete(User user){
+        sessionFactory.getCurrentSession().delete(user);
+    }
 }
