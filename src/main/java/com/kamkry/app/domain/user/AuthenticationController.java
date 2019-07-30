@@ -1,9 +1,7 @@
-package com.kamkry.app.web.controller.auth;
+package com.kamkry.app.domain.user;
 
 
-import com.kamkry.app.domain.user.User;
-import com.kamkry.app.domain.user.UserService;
-import com.kamkry.app.web.controller.user.exception.UserAlreadyExistsException;
+import com.kamkry.app.domain.user.exception.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;

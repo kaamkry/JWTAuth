@@ -1,4 +1,4 @@
-package com.kamkry.app.web.controller.chart;
+package com.kamkry.app.domain.chart;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;

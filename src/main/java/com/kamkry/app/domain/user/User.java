@@ -2,10 +2,8 @@ package com.kamkry.app.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -28,9 +26,6 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     @JsonIgnore
     private Set<UserRole> userRoles = new HashSet<>(0);
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -125,8 +120,18 @@ public class User implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
+    @Override
     public String toString() {
-        return "username='" + username + '\'' +
-                ", password='" + password + "'.";
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", userRoles=" + userRoles +
+                '}';
     }
 }

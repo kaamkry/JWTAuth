@@ -1,9 +1,7 @@
-package com.kamkry.app.web.controller.user;
+package com.kamkry.app.domain.user;
 
-import com.kamkry.app.domain.user.User;
-import com.kamkry.app.domain.user.UserService;
-import com.kamkry.app.web.controller.user.exception.UserAlreadyExistsException;
-import com.kamkry.app.web.controller.user.exception.UserNotFoundException;
+import com.kamkry.app.domain.user.exception.UserAlreadyExistsException;
+import com.kamkry.app.domain.user.exception.UserNotFoundException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

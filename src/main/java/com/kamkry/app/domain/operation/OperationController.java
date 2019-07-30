@@ -1,11 +1,9 @@
-package com.kamkry.app.web.controller.operation;
+package com.kamkry.app.domain.operation;
 
-import com.kamkry.app.domain.operation.Operation;
-import com.kamkry.app.domain.operation.OperationService;
 import com.kamkry.app.domain.user.User;
 import com.kamkry.app.domain.user.UserService;
-import com.kamkry.app.web.controller.user.exception.UserNotAuthorizedException;
-import com.kamkry.app.web.controller.user.exception.UserNotFoundException;
+import com.kamkry.app.domain.user.exception.UserNotAuthorizedException;
+import com.kamkry.app.domain.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

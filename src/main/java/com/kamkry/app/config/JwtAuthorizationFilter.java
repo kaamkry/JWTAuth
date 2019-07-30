@@ -1,4 +1,4 @@
-package com.kamkry.app.infrastructure.config;
+package com.kamkry.app.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.kamkry.app.infrastructure.config.SecurityConstants.*;
+import static com.kamkry.app.config.SecurityConstants.*;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 

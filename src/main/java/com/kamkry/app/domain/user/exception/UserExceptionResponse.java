@@ -1,14 +1,11 @@
-package com.kamkry.app.web.controller.user.exception;
+package com.kamkry.app.domain.user.exception;
 
 public class UserExceptionResponse {
     private int status;
     private String message;
-    private long timestamp;
+    private Long timestamp;
 
-    public UserExceptionResponse() {
-    }
-
-    public UserExceptionResponse(int status, String message, long timestamp) {
+    public UserExceptionResponse(int status, String message, Long timestamp) {
         this.status = status;
         this.message = message;
         this.timestamp = timestamp;
@@ -30,11 +27,11 @@ public class UserExceptionResponse {
         this.message = message;
     }
 
-    public long getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 }

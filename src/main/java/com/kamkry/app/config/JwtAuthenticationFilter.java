@@ -1,11 +1,11 @@
-package com.kamkry.app.infrastructure.config;
+package com.kamkry.app.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.kamkry.app.domain.user.User;
-import com.kamkry.app.web.controller.user.exception.UserExceptionResponse;
+import com.kamkry.app.domain.user.exception.UserExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-import static com.kamkry.app.infrastructure.config.SecurityConstants.*;
+import static com.kamkry.app.config.SecurityConstants.*;
 
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {

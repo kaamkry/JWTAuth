@@ -1,4 +1,4 @@
-package com.kamkry.app.infrastructure.config;
+package com.kamkry.app.config;
 
 public interface SecurityConstants {
     String SECRET = "WnZr4u7x!A%D*G-KaNdRgUkXp2s5v8y/B?E(H+MbQeShVmYq3t6w9z$C&F)J@NcR";

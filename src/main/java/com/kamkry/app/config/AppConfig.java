@@ -1,4 +1,4 @@
-package com.kamkry.app.infrastructure.config;
+package com.kamkry.app.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;

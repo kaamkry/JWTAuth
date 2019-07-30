@@ -1,4 +1,4 @@
-package com.kamkry.app.web.controller.user.exception;
+package com.kamkry.app.domain.user.exception;
 
 
 import org.springframework.http.HttpStatus;

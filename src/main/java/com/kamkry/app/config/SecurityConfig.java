@@ -1,4 +1,4 @@
-package com.kamkry.app.infrastructure.config;
+package com.kamkry.app.config;
 
 import com.kamkry.app.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static com.kamkry.app.infrastructure.config.SecurityConstants.LOGIN_URL;
-import static com.kamkry.app.infrastructure.config.SecurityConstants.SIGN_UP_URL;
+import static com.kamkry.app.config.SecurityConstants.LOGIN_URL;
+import static com.kamkry.app.config.SecurityConstants.SIGN_UP_URL;
 
 @Configuration
 @EnableWebSecurity
